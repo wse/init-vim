@@ -1,9 +1,9 @@
-"///-----------------------------------
+"///-----------------------------------------------------------------------
 " init.vim
-"   place in ~/.config/nvim
-"   start nvim
-"   execute command :PlugInstall
-"-------------------------------------///
+"   1. copy this file to ~/.config/nvim
+"   2. install plugin manager: sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+"   3. start nvim and execute command :PlugInstall
+"--------------------------------------------------------------------------///
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
@@ -12,11 +12,12 @@ endfunction
 call plug#begin('~/.vim/plugged')
 " Aesthetics
   Plug 'mhinz/vim-startify'                 "startup screen
+  " https://github.com/Yggdroot/indentLine
   Plug 'Yggdroot/indentLine'                "display thin vertical lines at each indentation level for code indented with spaces
+  "   
   Plug 'ryanoasis/vim-devicons'             "file type icons for plugins
   Plug 'myusuf3/numbers.vim'                "better line numbers
-  Plug 'vim-airline/vim-airline'            "lean & mean status/tabline for vim that's light as air 
-  Plug 'vim-airline/vim-airline-themes'     "themes for vim-airline
+  Plug 'powerline/powerline'                "status line
   Plug 'ianks/gruvbox'                      "gruvbox theme
   Plug 'airblade/vim-gitgutter'             "shows a git diff in the sign column 
   Plug 'altercation/vim-colors-solarized'   "solarized color scheme
@@ -45,15 +46,21 @@ call plug#begin('~/.vim/plugged')
   Plug 'maxbrunsfeld/vim-yankstack'         "lightweight implementation of the Emacs 'kill ring' for Vim
   Plug 'itchyny/calendar.vim'               "calendar application for vim
 " Navigation
+  " https://github.com/preservim/nerdtree
+  " Open NERDTree with the :NERDTree command
   Plug 'preservim/nerdtree'                 "The NERDTree is a file system explorer for the Vim editor
   Plug 'scrooloose/nerdtree-project-plugin' "saves the state of the NERDTree between sessions
-  Plug 'ctrlpvim/ctrlp.vim'                 "full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-  Plug 'wenlongche/SrcExpl'                 "source code explorer that provides context for the currently selected keyword
-  Plug 'preservim/tagbar'                   "a class outline viewer for Vim
-  Plug 'rizzatti/dash.vim'                  "search Dash.app from Vim
-  Plug 'eugen0329/vim-esearch'              "easy async search and replace across multiple files.
-  Plug 'farmergreg/vim-lastplace'           "reopen files at your last edit position
-  Plug 'lstwn/broot.vim'                    "broot integration
+  " Open ctrlpvim with the :CtrlP command 
+  Plug 'ctrlpvim/ctrlp.vim'                 "Full path fuzzy file/buffer/mru/tag/.. finder for Vim.
+  " Open SrcExpl with the :SrcExplToggle command  
+  Plug 'wenlongche/SrcExpl'                 "Source code explorer that provides context for the currently selected keyword
+  Plug 'preservim/tagbar'                   "Class outline viewer for Vim
+  " Plug 'rizzatti/dash.vim'                "Search Dash.app from Vim (Mac only app)
+  " vim-esearch: Type <leader>ff keys (leader is \ unless redefined) to open the input prompt.
+  Plug 'eugen0329/vim-esearch'              "Async search & replace across multiple files.
+
+  Plug 'farmergreg/vim-lastplace'           "Reopen files at your last edit position
+
 " Java
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-cmp' 
@@ -115,11 +122,12 @@ call plug#end()
     imap <c-v> <esc>"+pa
   " <F5> for gundo
     nnoremap <F5> GundoToggle<CR>
-  " broot
-    nnoremap <silent> <leader>e :BrootWorkingDir<CR>
-    nnoremap <silent> - :BrootCurrentDir<CR>
 " }}}
 
 " PLUGIN CONFIGURATION --------------------------------------------------- {{{
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
+
+" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
