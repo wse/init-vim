@@ -7,7 +7,6 @@
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-
 " PLUGINS ---------------------------------------------------------------- {{{
 call plug#begin('~/.vim/plugged')
 " Aesthetics
@@ -23,7 +22,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'altercation/vim-colors-solarized'   "solarized color scheme
 " Completion/templating
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') } 
-                                            "dark powered asynchronous completion framework for neovim/Vim8
   Plug 'jiangmiao/auto-pairs'               "insert or delete brackets, parens, quotes in pair.
   Plug 'ervandew/supertab'                  "allows you to use <Tab> for all your insert completion needs (:help ins-completion)
   Plug 'tpope/vim-endwise'                  "helps to end certain structures automatically                 
@@ -49,7 +47,7 @@ call plug#begin('~/.vim/plugged')
   " https://github.com/preservim/nerdtree
   " Open NERDTree with the :NERDTree command
   Plug 'preservim/nerdtree'                 "The NERDTree is a file system explorer for the Vim editor
-  Plug 'scrooloose/nerdtree-project-plugin' "saves the state of the NERDTree between sessions
+  " Plug 'scrooloose/nerdtree-project-plugin' "saves the state of the NERDTree between sessions
   " Open ctrlpvim with the :CtrlP command 
   Plug 'ctrlpvim/ctrlp.vim'                 "Full path fuzzy file/buffer/mru/tag/.. finder for Vim.
   " Open SrcExpl with the :SrcExplToggle command  
@@ -58,9 +56,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'rizzatti/dash.vim'                "Search Dash.app from Vim (Mac only app)
   " vim-esearch: Type <leader>ff keys (leader is \ unless redefined) to open the input prompt.
   Plug 'eugen0329/vim-esearch'              "Async search & replace across multiple files.
-
   Plug 'farmergreg/vim-lastplace'           "Reopen files at your last edit position
-
 " Java
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/nvim-cmp' 
@@ -123,11 +119,10 @@ call plug#end()
   " <F5> for gundo
     nnoremap <F5> GundoToggle<CR>
 " }}}
-
+"
 " PLUGIN CONFIGURATION --------------------------------------------------- {{{
 " Use deoplete.
 "let g:deoplete#enable_at_startup = 1
-
 " Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists(“s:std_in”) | NERDTree | endif
